@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>Bild senden</title>
+<script>
+// Hilfsseite: schickt ein Bild aus diesem Ordner an die Seite, die sie eingebettet hat (nur App Store Connect und Play Console).
+const OK=['https://appstoreconnect.apple.com','https://play.google.com'];
+addEventListener('message',async e=>{if(!OK.includes(e.origin)||!e.data||!e.data.want)return;
+ const n=String(e.data.want).replace(/[^a-z0-9._-]/gi,'');const r=await fetch(n);const buf=await r.arrayBuffer();
+ e.source.postMessage({name:n,buf,type:r.headers.get('content-type')},e.origin,[buf])});
+parent.postMessage({ready:1},'*');
+</script>
